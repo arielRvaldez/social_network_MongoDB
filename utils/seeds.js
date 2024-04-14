@@ -24,7 +24,7 @@ connection.once('open', async () => {
     const username = getRandomUsername();
 
     users.push({
-      username
+      username,
     });
   }
 

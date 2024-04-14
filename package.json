@@ -1,0 +1,31 @@
+{
+  "name": "social-network-mongodb",
+  "version": "1.0.0",
+  "description": "challenge-18 using express and mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "npm start",
+    "seed": "node utils/seeds.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/arielRvaldez/social_network_MongoDB.git"
+  },
+  "keywords": [
+    "mongo_db",
+    "express.js",
+    "node.js"
+  ],
+  "author": "https://github.com/arielRvaldez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arielRvaldez/social_network_MongoDB/issues"
+  },
+  "homepage": "https://github.com/arielRvaldez/social_network_MongoDB#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1",
+    "nodemon": "^3.1.0"
+  }
+}
