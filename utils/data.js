@@ -1,4 +1,4 @@
-const usernames = [
+const username = [
     'lernantino',
     'user2',
     'user3',
