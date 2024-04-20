@@ -1,64 +1,119 @@
-const username = [
-    'lernantino',
-    'user2',
-    'user3',
-    'user4',
-    'user5',
-    'user6',
-    'user7',
-    'user8',
-    'user9',
-    'user10',
-    'user11',
-    'user12',
-];
-
-// const emails = [
-//     'lernantino@outlook.com',
-//     'user2@gmail.com',
-//     'user3@hotmail.com',
-//     'user4@yahoo.com',
-//     'user5@aol.com',
-//     'user6@txstate.edu',
-//     'user7@ut.edu',
-//     'user8@gmail.com',  
-//     'user9@outlook.com',
-//     'user10@yahoo.com',
-//     'user11@aol.com',
-//     'user12@hotmail.com',
-// ];
-
-const possibleReactions = [
-    'heart',
-    'like',
-    'laughing',
-    'surprised',
-    'sad',
-    'angry',
-];
-
-// const users = [];
-
-const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-const getRandomUsername = () => 
-    '${getRandomArrItem(usernames)} ${getRandomArrItem(usernames)}';
-
-const getRandomThoughts = (int) => {
+const usernames = [
+    'Aaran',
+    'Aaren',
+    'Aarez',
+    'Aarman',
+    'Aaron',
+    'Aaron-James',
+    'Aarron',
+    'Aaryan',
+    'Aaryn',
+    'Aayan',
+    'Aazaan',
+    'Abaan',
+    'Abbas',
+    'Abdallah',
+    'Abdalroof',
+    'Abdihakim',
+    'Abdirahman',
+    'Abdisalam',
+    'Abdul',
+    'Abdul-Aziz',
+    'Abdulbasir',
+    'Abdulkadir',
+    'Abdulkarem',
+    'Smith',
+    'Jones',
+    'Coollastname',
+    'enter_name_here',
+    'Ze',
+    'Zechariah',
+    'Zeek',
+    'Zeeshan',
+    'Zeid',
+    'Zein',
+    'Zen',
+    'Zendel',
+    'Zenith',
+    'Zennon',
+    'Zeph',
+    'Zerah',
+    'Zhen',
+    'Zhi',
+    'Zhong',
+    'Zhuo',
+    'Zi',
+    'Zidane',
+    'Zijie',
+    'Zinedine',
+    'Zion',
+    'Zishan',
+    'Ziya',
+    'Ziyaan',
+    'Zohaib',
+    'Zohair',
+    'Zoubaeir',
+    'Zubair',
+    'Zubayr',
+    'Zuriel',
+    'Xander',
+    'Jared',
+    'Courtney',
+    'Gillian',
+    'Clark',
+    'Jared',
+    'Grace',
+    'Kelsey',
+    'Tamar',
+    'Alex',
+    'Mark',
+    'Tamar',
+    'Farish',
+    'Sarah',
+    'Nathaniel',
+    'Parker',
+  ];
+  
+  const thoughtDescriptions = [
+    'Decision Tracker',
+    'Find My Phone',
+    'Learn Piano',
+    'Starbase Defender',
+    'Tower Defense',
+    'Monopoly Money Manager',
+    'Movie trailers',
+    'Hello world',
+    'Stupid Social Media App',
+    'Notes',
+    'Messages',
+    'Email',
+    'Compass',
+    'Firefox',
+    'Running app',
+    'Cooking app',
+    'Poker',
+    'Deliveries',
+  ];
+  
+  // Get a random item given an array
+  const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  
+  // Gets a random full name
+  const getRandomUser = () =>
+    `${getRandomArrItem(usernames)} ${getRandomArrItem(usernames)}`;
+  
+  // Function to generate random assignments that we can add to student object.
+  const getRandomThoughts = (int) => {
     const results = [];
     for (let i = 0; i < int; i++) {
-        results.push({
-            thoughtText: `Thought number ${i + 1}`,
-            username: getRandomUsername(),
-            createdAt,
-            reactions: [
-                {
-                    reaction: getRandomArrItem(possibleReactions),
-                },
-            ],
-        });
+      results.push({
+        thoughtName: getRandomArrItem(thoughtDescriptions),
+        thoughtText: getRandomArrItem(thoughtDescriptions),
+      });
     }
     return results;
-}
-
-module.exports = { getRandomUsername, getRandomThoughts };
+  };
+  
+  // Export the functions for use in seed.js
+  module.exports = { getRandomUser, getRandomThoughts };
+  
