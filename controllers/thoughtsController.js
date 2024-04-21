@@ -84,5 +84,63 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // Remove thought from a friend
+  async removeThought(req, res) {
+    try {
+      const User = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { thought: { thoughtId: req.params.thoughtId } } },
+        { runValidators: true, new: true }
+      );
+
+      if (!user) {
+        return res
+          .status(404)
+          .json({ message: 'No friend found with that ID :(' });
+      }
+
+      res.json('Thought removed!');
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  // Add a reaction
+  async addReaction(req, res) {
+    try {
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $push: { reactions: req.body } },
+        { new: true }
+      );
+
+      if (!thought) {
+        return res.status(404).json({ message: 'No thought with this id!' });
+      }
+
+      res.json(thought);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
+  // Remove a reaction
+  async removeReaction(req, res) {
+    try {
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: { reactionId: req.params.reactionId } } },
+        { new: true }
+      );
+
+      if (!thought) {
+        return res.status(404).json({ message: 'No thought with this id!' });
+      }
+
+      res.json(thought);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
 };
 
