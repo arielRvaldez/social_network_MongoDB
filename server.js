@@ -5,25 +5,40 @@ const routes = require('./routes');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const connectionStringURI = `mongodb://127.0.0.1:27017`;
+const connectionStringURI = `mongoose.connect('mongodb://127.0.0.1:27017/friendsdb');`;
 const client = new MongoClient(connectionStringURI);
 // let db;
 
-const dbName = 'friendsdb';
+// const dbName = 'friendsdb';
 
-client.connect()
-  .then (() => {
-    console.log('Connected to the database');
-    const db = client.db(dbName);
+// const db = require('./config/connection');
+const db = require('./config/connection');
 
-   app.use(express.urlencoded({ extended: true }));
-   app.use(express.json());
-   app.use(routes);
-  
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+db.once('open', () => {
+ app.listen(PORT, () => {
+  console.log(`API server running on port ${PORT}!`);
+ });
+});
+
+// async function seedDBAndStartServer() {
+//   try {
+//     await client.connect();
+//     console.log('Connected to the database');
+//     db = client.db(dbName);
+//     await db.collection('users').deleteMany({});
+//     await db.collection('users').insertMany(data);
+
+//     app.listen(PORT, () => {
+//       console.log(`Server is running on http://localhost:${PORT}`);
+//     });
+//   } catch (err) {
+//     console.error('MongoDB connection error:', err.message);
+//   }
+// }
+// seedDBAndStartServer();
+
+app.use(express.json());
+app.use(routes);
 
 app.post('/create', (req, res) => {
   db.collection('users').insertOne(req.body)
@@ -69,10 +84,6 @@ app.delete('/delete', (req, res) => {
       console.error(err);
       res.status(400).json(err);
     });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
 });
 });
 
