@@ -1,21 +1,22 @@
 const { ObjectId } = require('mongoose').Types;
-const { Friend, Course } = require('../models');
+const { User } = require('../models');
+const { Thought } = require('../models');
 
 // Aggregate function to get the number of Friends overall
 const headCount = async () => {
-  const numberOfFriends = await Friend.aggregate()
-    .count('friendCount');
-  return numberOfFriends;
+  const numberOfUsers = await User.aggregate()
+    .count('UserCount');
+  return numberOfUsers;
 }
 
 module.exports = {
   // Get all friends
-  async getFriends(req, res) {
+  async getUsers(req, res) {
     try {
-      const friends = await Friend.find();
+      const users = await User.find();
 
-      const friendObj = {
-        friends,
+      const userObj = {
+        users,
         headCount: await headCount(),
       };
 
@@ -26,16 +27,16 @@ module.exports = {
     }
   },
   // Get a single friend
-  async getSingleFriend(req, res) {
+  async getSingleUser(req, res) {
     try {
-      const friend = await Friend.findOne({ _id: req.params.friendId })
+      const user = await User.findOne({ _id: req.params.userId })
         .select('-__v');
 
-      if (!friend) {
+      if (!user) {
         return res.status(404).json({ message: 'No friend with that ID' })
       }
 
-      res.json(friend);
+      res.json(user);
       
     } catch (err) {
       console.log(err);
@@ -43,10 +44,10 @@ module.exports = {
     }
   },
   // create a new friend
-  async createFriend(req, res) {
+  async createUser(req, res) {
     try {
-      const friend = await Friend.create(req.body);
-      res.json(friend);
+      const user = await User.create(req.body);
+      res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -58,13 +59,13 @@ module.exports = {
     console.log(req.body);
 
     try {
-      const friend = await Friend.findOneAndUpdate(
-        { _id: req.params.friendId },
-        { $addToSet: { assignments: req.body } },
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { thoughts: req.body } },
         { runValidators: true, new: true }
       );
 
-      if (!friend) {
+      if (!user) {
         return res
           .status(404)
           .json({ message: 'No friend found with that ID :(' });
@@ -78,19 +79,19 @@ module.exports = {
   // Remove thought from a friend
   async removeThought(req, res) {
     try {
-      const Friend = await Friend.findOneAndUpdate(
-        { _id: req.params.friendId },
-        { $pull: { assignment: { assignmentId: req.params.assignmentId } } },
+      const User = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { thought: { thoughtId: req.params.thoughtId } } },
         { runValidators: true, new: true }
       );
 
-      if (!friend) {
+      if (!user) {
         return res
           .status(404)
           .json({ message: 'No friend found with that ID :(' });
       }
 
-      res.json('Thought removed! 🎉');
+      res.json('Thought removed!');
     } catch (err) {
       res.status(500).json(err);
     }

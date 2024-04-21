@@ -1,17 +1,12 @@
 const express = require('express');
-const db = require('./config/connection');
-const routes = require('./routes');
-const { User, Thought } = require('../models');
-
 const { MongoClient, ObjectId } = require('mongodb');
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 const connectionStringURI = 'mongodb://localhost:27017';
-
 const client = new MongoClient(connectionStringURI);
-
 let db;
 
 const dbName = 'friendsdb';
@@ -34,7 +29,7 @@ app.use(express.json());
 app.use(routes);
 
 app.post('/create', (req, res) => {
-  db.collection('friends').insertOne(req.body)
+  db.collection('users').insertOne(req.body)
     .then((result) => {
       res.json(result);
     })
@@ -45,7 +40,7 @@ app.post('/create', (req, res) => {
 });
 
 app.post('/create-many', (req, res) => {
-  db.collection('friends').insertMany(req.body)
+  db.collection('users').insertMany(req.body)
     .then((result) => {
       res.json(result);
     })
@@ -56,7 +51,7 @@ app.post('/create-many', (req, res) => {
 });
 
 app.get('/read', (req, res) => {
-  db.collection('friends').find({})
+  db.collection('users').find({})
     .toArray()
     .then((result) => {
       res.json(result);
@@ -67,7 +62,7 @@ app.get('/read', (req, res) => {
     });
 
 app.delete('/delete', (req, res) => {
-  db.collection('friends').deleteOne({ _id: ObjectId(req.body.id) })
+  db.collection('users').deleteOne({ _id: ObjectId(req.body.id) })
     .then((result) => {
       console.log(results);
       res.send
@@ -78,11 +73,12 @@ app.delete('/delete', (req, res) => {
       res.status(400).json(err);
     });
 });
+});
 
-db.once('open', () => {
-  app.listen(PORT, () => {
-   console.log(`API server running on port ${PORT}!`);
-  }); // Add a comma here
-});
-});
+// db.once('open', () => {
+//   app.listen(PORT, () => {
+//    console.log(`API server running on port ${PORT}!`);
+//   }); // Add a comma here
+// });
+// });
 

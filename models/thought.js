@@ -1,41 +1,35 @@
-const { Schema, model, get } = require('mongoose');
+const { Schema, model} = require('mongoose');
+// const User = require('./user');
 
 //reaction schema
 const reactionSchema = new Schema(
-    {
-        reactionId: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
-        },
-        reactionBody: {
-            type: String,
-            required: 'You need to provide a reaction!',
-            maxlength: 280,
-        },
-        username: {
-            type: String,
-            required: 'You need to provide a username!',
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: (createdAtVal) => dateFormat(createdAtVal),
-        },
-    },
-    // {
-    //     toJSON: {
-    //         getters: true,
-    //     },
-    //     id: false,
-    // }
-);
+  {
+      reactionId: {
+          type: Schema.Types.ObjectId,
+          default: () => new Types.ObjectId(),
+      },
+      reactionBody: {
+          type: String,
+          required: true,
+          maxlength: 280,
+      },
+      username: {
+          type: String,
+          required: true,
+      },
+      createdAt: {
+          type: Date,
+          default: Date.now,
+          get: (createdAtVal) => dateFormat(createdAtVal),
+      },
+  });
 
 // Schema to create post model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
     type: String,
-    required: 'You need to provide a thought!',
+    required: true,
     minlength: 1,
     maxlength: 280,
   },
@@ -46,7 +40,7 @@ const thoughtSchema = new Schema(
   },
     username: {
         type: String,
-        required: 'You need to provide a username!',
+        required: true,
     },
     reactions: [reactionSchema],
     },

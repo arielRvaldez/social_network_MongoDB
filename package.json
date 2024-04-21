@@ -25,7 +25,7 @@
   "homepage": "https://github.com/arielRvaldez/social_network_MongoDB#readme",
   "dependencies": {
     "express": "^4.19.2",
-    "mongoose": "^8.3.1",
+    "mongoose": "^8.3.2",
     "nodemon": "^3.1.0"
   }
 }
