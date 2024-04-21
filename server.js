@@ -5,28 +5,25 @@ const routes = require('./routes');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const connectionStringURI = 'mongodb://localhost:27017';
+const connectionStringURI = `mongodb://127.0.0.1:27017`;
 const client = new MongoClient(connectionStringURI);
-let db;
+// let db;
 
 const dbName = 'friendsdb';
 
 client.connect()
-  .then(() => {
+  .then (() => {
     console.log('Connected to the database');
-    db = client.db(dbName);
+    const db = client.db(dbName);
 
-    app.listen(PORT, () => {
-      console.log(`API server running on port ${PORT}!`);
-    });
+   app.use(express.urlencoded({ extended: true }));
+   app.use(express.json());
+   app.use(routes);
+  
   })
-  .catch(err => {
-    console.error('Error connecting to the database', err.message);
+  .catch((err) => {
+    console.error(err);
   });
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(routes);
 
 app.post('/create', (req, res) => {
   db.collection('users').insertOne(req.body)
@@ -66,19 +63,17 @@ app.delete('/delete', (req, res) => {
     .then((result) => {
       console.log(results);
       res.send
-      (results.deletedCount > 0 ? 'Success' : 'No match found');
+      (result.deletedCount > 0 ? 'Success' : 'No match found');
     })
     .catch((err) => {
       console.error(err);
       res.status(400).json(err);
     });
 });
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 });
 
-// db.once('open', () => {
-//   app.listen(PORT, () => {
-//    console.log(`API server running on port ${PORT}!`);
-//   }); // Add a comma here
-// });
-// });
 

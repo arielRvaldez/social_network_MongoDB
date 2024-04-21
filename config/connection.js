@@ -1,6 +1,6 @@
 const { connect, connection } = require('mongoose');
 
-const connectionString = 'mongodb://172.17.0.2:27017/friendsDB';
+const connectionString = 'mongodb://127.0.0.1:27017/friendsDB';
 
 connect(connectionString);
 
