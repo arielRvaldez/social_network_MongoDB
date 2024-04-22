@@ -2,11 +2,11 @@
   "name": "social-network-mongodb",
   "version": "1.0.0",
   "description": "challenge-18 using express and mongoose",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test",
-    "start": "npm start",
-    "seed": "node utils/seeds.js"
+    "start": "node server.js"
+  
   },
   "repository": {
     "type": "git",

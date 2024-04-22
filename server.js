@@ -1,17 +1,23 @@
 const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
 const db = require('./config/connection');
-
 const routes = require('./routes');
+// const { Thought } = require('./models/thought');
+// const { User } = require('./models/user');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+// const activity = cwd.includes('server')
+//   ? cwd.split('server')[1]
+//   : cwd;
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
 
 db.once('open', () => {
   app.listen(PORT, () => {
-   console.log(`API server running on port ${PORT}!`);
+   console.log(`API server for ${activity} running on port ${PORT}!`);
   });
  });
 
